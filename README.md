@@ -11,3 +11,8 @@ A customizable, 3D-print-friendly case designed in OpenSCAD – fully parametric
 * **Secure bottom lid** – mounted with heat-set M2 threaded inserts
 * **Refined acoustics** – quiet, pleasant typing sound
 
+| ![](gallery/case_01_800x602.jpg) | ![](gallery/case_02_800x602.jpg) | ![](gallery/case_03_800x602.jpg) |
+|----------------------------------|----------------------------------|----------------------------------|
+| ![](gallery/case_04_800x602.jpg) | ![](gallery/case_05_800x602.jpg) | ![](gallery/case_06_800x602.jpg) |
+
+
