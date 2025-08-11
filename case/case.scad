@@ -30,7 +30,6 @@ dxf_cavity = "sweep-bling-mx__plate-Edge_Cuts-outline.dxf";
 dxf_controller = "controller_cutout.dxf";
 dxf_usb = "usb-flat-cutout.dxf";
 dxf_reset = "reset.dxf";
-dxf_pwr = "power_switch/lid_cutout.dxf";
 dxf_pwr_slider = "power_switch/slider_part.dxf";
 dxf_pwr_cutout = "power_switch/slider_cutout.dxf";
 dxf_pwr_overhang = "power_switch/overhang.dxf";
@@ -259,7 +258,7 @@ module bottom_case(){
     }
 }
 
-top_case();
-bottom_case();
+//top_case();
+//bottom_case();
 power_switch_slider();
-reset_switch_button();
+//reset_switch_button();
