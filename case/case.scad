@@ -2,7 +2,7 @@
 // --------------- Key Parameters, Fine-Tuning Here ---------------------------
 // -----------------------------------------------------------------------------
 
-$fn = 10;                // Resolution for bore edges
+$fn = 100;                // Resolution for bore edges
 fillet_radius = 2;     // Radius of fillet, if desired
 wall_thickness = 5.5;    // Wall thickness
 separation = 0;          // Separation offset
@@ -35,6 +35,7 @@ dxf_pwr_slider = "power_switch/slider_part.dxf";
 dxf_pwr_cutout = "power_switch/slider_cutout.dxf";
 dxf_pwr_overhang = "power_switch/overhang.dxf";
 dxf_pwr_overhang_cutout = "power_switch/overhang_cutout.dxf";
+dxf_slider_label = "power_switch/slider_label.dxf";
 
 
 // Screw hole positions: centers of the 5 screws [X, Y] in mm
@@ -195,6 +196,11 @@ module power_switch_slider() {
         translate([0,0, -thickness + immersion_depth + 0.5 + separation])
             linear_extrude(height = slider_total_height - immersion_depth)
                 import(dxf_pwr_cutout);
+        // slider label
+        translate([0,0, -thickness - switch_protruction + separation])
+            linear_extrude(height = 0.2)
+                import(dxf_slider_label);
+        
     }
     // slider body overhang
     translate([0,0, separation])
