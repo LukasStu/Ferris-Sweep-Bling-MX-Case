@@ -1,0 +1,81 @@
+name: Build & Release STLs
+
+on:
+  push:
+    tags:
+      - 'v*'                 # e.g. v1.2.0
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        part: [top_case, bottom_case, power_switch_slider, reset_switch_button]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install OpenSCAD
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openscad
+
+      - name: Render ${{ matrix.part }}
+        run: |
+          mkdir -p build
+          openscad --render \
+            -o build/${{ matrix.part }}.stl \
+            -D 'PART="${{ matrix.part }}"' \
+            case/case.scad
+
+      # Upload per-part temps to pass artifacts between jobs (short retention)
+      - name: Upload STL artifact (temp)
+        uses: actions/upload-artifact@v4
+        with:
+          name: temp-${{ matrix.part }}     # unique per matrix entry
+          path: build/${{ matrix.part }}.stl
+          if-no-files-found: error
+          retention-days: 1                 # let temps auto-expire
+
+  package:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download all temp STL artifacts and merge
+        uses: actions/download-artifact@v4
+        with:
+          pattern: temp-*                   # grab all per-part artifacts
+          merge-multiple: true              # merge into a single folder
+          path: build
+
+      - name: Upload consolidated artifact (Actions UI)
+        uses: actions/upload-artifact@v4
+        with:
+          name: case                        # one-click download in Actions
+          path: build/*.stl
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Install zip tool
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zip
+
+      - name: Create case.zip
+        run: |
+          cd build
+          zip -r case.zip *.stl
+
+      - name: Create GitHub Release and attach assets
+        uses: softprops/action-gh-release@v2
+        with:
+          # Attach both the ZIP (single download) and the individual STLs
+          files: |
+            build/case.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
