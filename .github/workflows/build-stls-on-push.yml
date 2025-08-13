@@ -1,0 +1,68 @@
+name: Build STLs on push
+
+on:
+  push:
+    branches: ["**"]        # Run on any branch
+    tags-ignore: ["v*"]     # Ignore version tags handled by the release workflow
+  pull_request:             # Run on PRs
+  workflow_dispatch:        # Allow manual runs from the UI
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-stls-${{ github.ref }}
+  cancel-in-progress: true  # Cancel previous runs for the same ref
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        part: [top_case, bottom_case, power_switch_slider, reset_switch_button]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install OpenSCAD
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openscad
+
+      - name: Render STL for ${{ matrix.part }}
+        run: |
+          mkdir -p build
+          openscad --render \
+            -o build/${{ matrix.part }}.stl \
+            -D 'PART="${{ matrix.part }}"' \
+            case/case.scad
+
+      # Upload each STL temporarily to pass between jobs (unique names to avoid conflicts)
+      - name: Upload STL artifact (temp)
+        uses: actions/upload-artifact@v4
+        with:
+          name: temp-${{ matrix.part }}
+          path: build/${{ matrix.part }}.stl
+          if-no-files-found: error
+          retention-days: 1   # short life, we'll merge and delete later
+
+  package:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download all temp STL artifacts and merge
+        uses: actions/download-artifact@v4
+        with:
+          pattern: temp-*
+          merge-multiple: true
+          path: build
+
+      # Upload final single artifact called "case"
+      - name: Upload consolidated STL artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: case            # final name for the single downloadable archive
+          path: build/*.stl
+          if-no-files-found: error
+          retention-days: 14
