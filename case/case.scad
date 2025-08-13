@@ -265,7 +265,28 @@ module bottom_case(){
     }
 }
 
-top_case();
-bottom_case();
-power_switch_slider();
-reset_switch_button();
+// ===== Build selector =====
+// Options: "all", "top_case", "bottom_case", "power_switch_slider", "reset_switch_button"
+PART = "all";   // change here during interactive use (F5/F6) or override via -D 'PART="..."'
+
+module build() {
+  if (PART == "all") {
+    // Arrange parts offset for previewing the full assembly
+    translate([ 0, 0,  10]) top_case();
+    translate([ 0, 0, -30]) bottom_case();
+    translate([ 0, 0, -10]) power_switch_slider();
+    translate([ 0, 0, -20]) reset_switch_button();
+  } else if (PART == "top_case") {
+    top_case();
+  } else if (PART == "bottom_case") {
+    bottom_case();
+  } else if (PART == "power_switch_slider") {
+    power_switch_slider();
+  } else if (PART == "reset_switch_button") {
+    reset_switch_button();
+  } else {
+    echo(str("Unknown PART: ", PART));
+  }
+}
+
+build();  // single top-level call
