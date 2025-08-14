@@ -23,17 +23,17 @@ $INSBASE
   9
 $EXTMIN
  10
-126.974
+128.6739966257769
  20
--77.30199999999999
+-76.89999999999999
  30
 0
   9
 $EXTMAX
  10
-131.5739932515538
+129.8739966257769
  20
-0
+-75.7
  30
 0
   9
@@ -91,7 +91,7 @@ STANDARD
   9
 $CLAYER
   8
-label
+0
   9
 $CELTYPE
   6
@@ -1115,9 +1115,9 @@ AcDbViewportTableRecord
  21
 1
  12
-67.92161160344575
+71.01074458638458
  22
--34.04153272087717
+-28.74182605379442
  13
 0
  23
@@ -1143,9 +1143,9 @@ AcDbViewportTableRecord
  37
 0
  40
-11.81640279121007
+29.0274268546903
  41
-1.802732707087959
+1.878354203935599
  42
 50
  43
@@ -2255,143 +2255,11 @@ AcDbSymbolTableRecord
 100
 AcDbLayerTableRecord
   2
-BLACK
- 70
-    0
- 62
-    7
-  6
-CONTINUOUS
-370
-   -3
-390
-F
-  0
-LAYER
-  5
-4B
-330
-2
-100
-AcDbSymbolTableRecord
-100
-AcDbLayerTableRecord
-  2
-cutout
- 70
-    0
- 62
-    3
-  6
-CONTINUOUS
-370
-    0
-390
-F
-  0
-LAYER
-  5
-4C
-330
-2
-100
-AcDbSymbolTableRecord
-100
-AcDbLayerTableRecord
-  2
-help
- 70
-    0
- 62
-    6
-  6
-CONTINUOUS
-370
-    0
-390
-F
-  0
-LAYER
-  5
-4D
-330
-2
-100
-AcDbSymbolTableRecord
-100
-AcDbLayerTableRecord
-  2
-knop_cutout
- 70
-    0
- 62
-    5
-  6
-CONTINUOUS
-370
-    0
-390
-F
-  0
-LAYER
-  5
-4E
-330
-2
-100
-AcDbSymbolTableRecord
-100
-AcDbLayerTableRecord
-  2
 label
  70
     0
  62
     3
-  6
-CONTINUOUS
-370
-    0
-390
-F
-  0
-LAYER
-  5
-4F
-330
-2
-100
-AcDbSymbolTableRecord
-100
-AcDbLayerTableRecord
-  2
-slider_part
- 70
-    0
- 62
-    7
-  6
-CONTINUOUS
-370
-    0
-390
-F
-  0
-LAYER
-  5
-50
-330
-2
-100
-AcDbSymbolTableRecord
-100
-AcDbLayerTableRecord
-  2
-switch
- 70
-    0
- 62
-    4
   6
 CONTINUOUS
 370
@@ -2415,7 +2283,7 @@ AcDbSymbolTable
   0
 STYLE
   5
-51
+4B
 330
 2
 100
@@ -2499,7 +2367,7 @@ ACAD
   0
 APPID
   5
-52
+4C
 330
 9
 100
@@ -2531,7 +2399,7 @@ AcDbDimStyleTable
   0
 DIMSTYLE
 105
-53
+4D
 330
 A
 100
@@ -2655,7 +2523,7 @@ Standard
 289
     3
 340
-51
+4B
   0
 ENDTAB
   0
@@ -2799,7 +2667,7 @@ ENTITIES
   0
 CIRCLE
   5
-54
+4E
 100
 AcDbEntity
   8
@@ -2851,7 +2719,7 @@ AcDbDictionary
   0
 PLOTSETTINGS
   5
-55
+4F
 100
 AcDbPlotSettings
   6
