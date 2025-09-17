@@ -199,6 +199,89 @@ module bottom_foam() {
 }
 
 // -----------------------------------------------------------------------------
+// --------------------------- Optional Tent Support ---------------------------
+// -----------------------------------------------------------------------------
+// Render by setting PART = "tent"
+// Note: Changing tenting_angle requires adjusting tent_lowering.
+
+// ---- Tenting Parameters ----
+tenting_angle = 10;
+tent_base_thickness = 1;
+tent_support_base_thickness = 0.0001;
+tent_support_base_width = 2;
+tent_support_wall_thickness = 1.5;
+tent_support_wall_height = 6;
+tent_clearance = 0.2;
+tent_lowering = 5.5;
+
+// Outline (uses main PCB outline layer) expanded by case wall_thickness
+module tent_case_outline() { offset(delta=wall_thickness) import(file=DXF, layer=L_plate); }
+
+module tent_base_plate() {
+  linear_extrude(tent_base_thickness)
+    projection()
+      rotate([0, -tenting_angle, 0])
+        linear_extrude(0.0001)
+          offset(delta=tent_clearance + tent_support_wall_thickness)
+            tent_case_outline();
+}
+
+module tent_support_base() {
+  linear_extrude(tent_support_base_thickness)
+    difference() {
+      offset(delta=tent_clearance + tent_support_wall_thickness)
+        tent_case_outline();
+      offset(delta=-tent_support_base_width)
+        tent_case_outline();
+    }
+}
+
+module tent_support_walls() {
+  translate([0, 0, tent_support_base_thickness])
+    linear_extrude(tent_support_wall_height)
+      difference() {
+        offset(delta=tent_clearance + tent_support_wall_thickness)
+          tent_case_outline();
+        offset(delta=tent_clearance)
+          tent_case_outline();
+      }
+}
+
+module tent_support() {
+  translate([0, 0, tent_base_thickness])
+    union() {
+      translate([0, 0, tent_support_base_thickness - tent_lowering])
+        rotate([0, -tenting_angle, 0])
+          union() {
+            tent_support_base();
+            tent_support_walls();
+          }
+
+      difference() {
+        linear_extrude()
+          projection()
+            rotate([0, -tenting_angle, 0])
+              linear_extrude(0.0001)
+                projection()
+                  tent_support_base();
+
+        translate([0, 0, tent_support_base_thickness - tent_lowering])
+          rotate([0, -tenting_angle, 0])
+            linear_extrude()
+              offset(delta=100)
+                projection()
+                  tent_support_base();
+      }
+    }
+}
+
+// Full tent assembly (base + support structure)
+module tent() {
+  tent_base_plate();
+  tent_support();
+}
+
+// -----------------------------------------------------------------------------
 // ------------------------------ Build Select ---------------------------------
 // -----------------------------------------------------------------------------
 PART = "exploded";
@@ -224,6 +307,8 @@ module build() {
     bottom_foam();
   else if (PART == "bottom_case")
     bottom_case();
+  else if (PART == "tent")
+    tent();
   else
     echo(str("Unknown PART: ", PART));
 }
