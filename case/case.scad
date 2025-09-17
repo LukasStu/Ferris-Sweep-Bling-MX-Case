@@ -1,14 +1,3 @@
-
-// =============================================================
-// File: case_cleaned.scad (auto-formatted)
-// Generated: 2025-08-25 11:52:23
-// Notes:
-// - Indentation normalized (2 spaces per level).
-// - Trailing spaces removed; blank lines compressed.
-// - Lightweight section comments for top-level parameters and modules.
-// - No geometry/logic changed.
-// =============================================================
-
 // -----------------------------------------------------------------------------
 // --------------- Key Parameters, Fine-Tuning Here ---------------------------
 // -----------------------------------------------------------------------------
