@@ -10,6 +10,7 @@ fillet_radius = 2;
 wall_thickness = 5.5;
 keycaps_cutout_height = 8;
 seal_thickness = 0.5;
+controller_wall_thickness = 1;
 
 fr4_thickness = 1.6;
 switchplate_thickness = 3.3;
@@ -105,7 +106,7 @@ module pcb_stack() { extrude_layer(L_plate, h=actual_bottom_foam_thickness + pcb
 module keycaps_cutout() { extrude_layer(L_cavity, h=total_height_top_case, delta=2 * keycaps_gap); }
 
 // -------------------- Module: flat_usb_cutout --------------------
-module flat_usb_cutout() { extrude_layer(L_usb, h=total_height_top_case - 1, delta=clear_usb_mm); }
+module flat_usb_cutout() { extrude_layer(L_usb, h=total_height_top_case - controller_wall_thickness, delta=clear_usb_mm); }
 
 // -------------------- Module: lid --------------------
 module lid() {
