@@ -11,7 +11,7 @@ A customizable, 3D-print-friendly case designed in OpenSCAD – fully parametric
 * **Easy PCB insertion** – no need to remove switches or keycaps
 * **Secure bottom lid** – mounted with heat-set M2 threaded inserts
 * **Refined acoustics** – quiet, pleasant typing sound
-* **Configurable tenting (new in v1.3.0)** – adjustable tent angle for a more ergonomic hand position
+* **Configurable tenting (new in v1.2.0)** – adjustable tent angle for a more ergonomic hand position
 
 
 | ![](gallery/case_01.jpg) | ![](gallery/case_02.jpg) |
