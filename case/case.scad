@@ -2,12 +2,12 @@
 // --------------- Key Parameters, Fine-Tuning Here ---------------------------
 // -----------------------------------------------------------------------------
 
-$fn = 100;
+$fn =  50;
 
 // Dimensions & geometry
 // -------------------- Parameters --------------------
-fillet_radius = 2;
-wall_thickness = 5.5;
+fillet_radius = 6;
+wall_thickness = 8.5;
 keycaps_cutout_height = 8;
 seal_thickness = 0.5;
 controller_wall_thickness = 1;
@@ -40,6 +40,7 @@ usb_tunnel_len_mm = 50;
 DXF = "ferris_sweep_bling_mx.dxf";
 
 L_plate = "pcb_outline";
+L_outer_shape = "outer_shape";
 L_cavity = "keycaps_outline";
 L_usb = "controller_cutout";
 L_reset = "reset";
@@ -85,8 +86,8 @@ module drill_holes(positions, d, z, h) { for (p = positions) translate([p[0], p[
 
 // -------------------- Module: rounded_case_extrude --------------------
 module rounded_case_extrude() {
-  extrude_layer(L_plate, h=fillet_radius, delta=wall_thickness);
-  minkowski() { sphere(fillet_radius); translate([0, 0, fillet_radius]) extrude_layer(L_plate, h=total_height_top_case - 2 * fillet_radius, delta=wall_thickness - fillet_radius); }
+  extrude_layer(L_outer_shape, h=fillet_radius, delta=wall_thickness);
+  minkowski() { sphere(fillet_radius); translate([0, 0, fillet_radius]) extrude_layer(L_outer_shape, h=total_height_top_case - 2 * fillet_radius, delta=wall_thickness - fillet_radius); }
 }
 
 // -------------------- Module: usb_c_cutout_2d --------------------
@@ -110,8 +111,8 @@ module flat_usb_cutout() { extrude_layer(L_usb, h=total_height_top_case - contro
 
 // -------------------- Module: lid --------------------
 module lid() {
-  extrude_layer(L_plate, z=Z_LID_BASE, h=lid_thickness, delta=wall_thickness);
-  extrude_layer(L_plate, z=Z_LID_BASE + lid_thickness, h=immersion_depth);
+  extrude_layer(L_outer_shape, z=Z_LID_BASE, h=lid_thickness, delta=wall_thickness);
+  extrude_layer(L_outer_shape, z=Z_LID_BASE + lid_thickness, h=immersion_depth);
 }
 
 // -------------------- Module: case_screw_holes --------------------
@@ -154,6 +155,17 @@ module reset_switch_button() {
   extrude_layer(L_reset, h=immersion_depth + 0.5, delta=reset_button_thick);
 }
 
+module top_plate_decor_cutout() {
+    extrude_layer(L_outer_shape, z=total_height_top_case-1 , h=1, delta=0.8);  
+}
+
+module top_plate_decor() {
+    difference(){
+        extrude_layer(L_outer_shape, z=total_height_top_case-1 , h=1, delta=0.5); 
+        keycaps_cutout();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // ------------------------------ Assemblies -----------------------------------
 // -----------------------------------------------------------------------------
@@ -164,11 +176,13 @@ module top_case() {
     outer_case();
     pcb_stack();
     keycaps_cutout();
+    top_plate_decor_cutout();
     power_switch_overhang_cutout(delta=clear_switch_mm);
     case_screw_holes();
     usb_c_cutout_position();
     flat_usb_cutout();
   }
+  top_plate_decor();
 }
 
 // -------------------- Module: bottom_case --------------------
