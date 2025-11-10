@@ -2,12 +2,12 @@
 // --------------- Key Parameters, Fine-Tuning Here ---------------------------
 // -----------------------------------------------------------------------------
 
-$fn =  50;
+$fn =  40;
 
 // Dimensions & geometry
 // -------------------- Parameters --------------------
-fillet_radius = 6;
-wall_thickness = 8.5;
+fillet_radius = 2.5;
+wall_thickness = 0;
 keycaps_cutout_height = 8;
 seal_thickness = 0.5;
 controller_wall_thickness = 1;
@@ -41,6 +41,8 @@ DXF = "ferris_sweep_bling_mx.dxf";
 
 L_plate = "pcb_outline";
 L_outer_shape = "outer_shape";
+L_outer_shape_decor = "outer_shape_decor";
+L_decor_lines = "decor_lines";
 L_cavity = "keycaps_outline";
 L_usb = "controller_cutout";
 L_reset = "reset";
@@ -156,14 +158,18 @@ module reset_switch_button() {
 }
 
 module top_plate_decor_cutout() {
-    extrude_layer(L_outer_shape, z=total_height_top_case-1 , h=1, delta=0.8);  
+    extrude_layer(L_outer_shape_decor, z=total_height_top_case-1 , h=1, delta=0.5);  
 }
 
 module top_plate_decor() {
     difference(){
-        extrude_layer(L_outer_shape, z=total_height_top_case-1 , h=1, delta=0.5); 
+        extrude_layer(L_outer_shape_decor, z=total_height_top_case-1 , h=1, delta=0.0); 
         keycaps_cutout();
     }
+}
+
+module top_plate_decor_lines_cutout() {
+    extrude_layer(L_decor_lines, z=total_height_top_case-0.5 , h=0.5, delta=0);  
 }
 
 // -----------------------------------------------------------------------------
@@ -177,6 +183,7 @@ module top_case() {
     pcb_stack();
     keycaps_cutout();
     top_plate_decor_cutout();
+    top_plate_decor_lines_cutout()
     power_switch_overhang_cutout(delta=clear_switch_mm);
     case_screw_holes();
     usb_c_cutout_position();
@@ -299,7 +306,7 @@ module tent() {
 // -----------------------------------------------------------------------------
 // ------------------------------ Build Select ---------------------------------
 // -----------------------------------------------------------------------------
-PART = "exploded";
+PART = "top_case";
 
 // -------------------- Module: build --------------------
 module build() {
