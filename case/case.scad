@@ -7,7 +7,8 @@ $fn =  100;
 // Dimensions & geometry
 // -------------------- Parameters --------------------
 fillet_radius = 2.5;
-wall_thickness = 0;
+wall_thickness_outer = 5;
+wall_thickness_inner = 2;
 keycaps_cutout_height = 8;
 seal_thickness = 0.5;
 controller_wall_thickness = 1;
@@ -56,7 +57,7 @@ L_switches = "switches";
 L_switchplate = "switchplate_outline";
 
 // Screw positions & sizes
-screw_positions = [[136.5, -147], [33, -125], [34.5, -65], [120, -53], [152, -90]];
+screw_positions = [[151, -147], [31, -127], [33, -34], [150, -35], [153.5, -90]];
 case_screw_diameter = 2.7;
 case_screw_depth = 3.1;
 lid_screw_diameter = 2.5;
@@ -88,10 +89,16 @@ module drill_holes(positions, d, z, h) { for (p = positions) translate([p[0], p[
 
 // -------------------- Module: rounded_case_extrude --------------------
 module rounded_case_extrude() {
-  extrude_layer(L_outer_shape, h=fillet_radius, delta=wall_thickness);
-  minkowski() { sphere(fillet_radius); translate([0, 0, fillet_radius]) extrude_layer(L_outer_shape, h=total_height_top_case - 2 * fillet_radius, delta=wall_thickness - fillet_radius); }
+  extrude_layer(L_outer_shape, h=fillet_radius, delta=0);
+  minkowski() { sphere(fillet_radius); translate([0, 0, fillet_radius]) extrude_layer(L_outer_shape, h=total_height_top_case - 2 * fillet_radius, delta= - fillet_radius); }
 }
 
+module pcb_holder() {
+    difference() {
+        extrude_layer(L_outer_shape, h=total_height_top_case-5, delta=-wall_thickness_outer);
+        extrude_layer(L_plate, h=total_height_top_case-5, delta=wall_thickness_inner);
+    }
+}
 // -------------------- Module: usb_c_cutout_2d --------------------
 module usb_c_cutout_2d(c = 0.1) {
   w = w_shell + 2 * c;
@@ -113,7 +120,7 @@ module flat_usb_cutout() { extrude_layer(L_usb, h=total_height_top_case - contro
 
 // -------------------- Module: lid --------------------
 module lid() {
-  extrude_layer(L_outer_shape, z=Z_LID_BASE, h=lid_thickness, delta=wall_thickness);
+  extrude_layer(L_outer_shape, z=Z_LID_BASE, h=lid_thickness, delta=0);
   extrude_layer(L_outer_shape, z=Z_LID_BASE + lid_thickness, h=immersion_depth);
 }
 
@@ -125,7 +132,7 @@ module lid_screw_holes() { drill_holes(screw_positions, lid_screw_diameter, Z_LI
 
 // -------------------- Module: usb_c_cutout_position --------------------
 module usb_c_cutout_position() {
-  translate(usb_main_offset) rotate([90, 0, 0]) linear_extrude(height=wall_thickness) usb_c_cutout_2d(0.1);
+  translate(usb_main_offset) rotate([90, 0, 0]) linear_extrude(height=5) usb_c_cutout_2d(0.1);
   translate(usb_tunnel_offset) rotate([90, 0, 0]) linear_extrude(height=usb_tunnel_len_mm) usb_c_cutout_2d(1.5);
 }
 
@@ -158,12 +165,12 @@ module reset_switch_button() {
 }
 
 module top_plate_decor_cutout() {
-    extrude_layer(L_outer_shape_decor, z=total_height_top_case-1 , h=1, delta=0.5);  
+    extrude_layer(L_outer_shape_decor, z=total_height_top_case-0.5 , h=0.5, delta=0.5);  
 }
 
 module top_plate_decor() {
     difference(){
-        extrude_layer(L_outer_shape_decor, z=total_height_top_case-1 , h=1, delta=0.0); 
+        extrude_layer(L_outer_shape_decor, z=total_height_top_case-0.5 , h=0.5, delta=0.0); 
         keycaps_cutout();
     }
 }
@@ -188,6 +195,7 @@ module top_case() {
     case_screw_holes();
     usb_c_cutout_position();
     flat_usb_cutout();
+    pcb_holder();
   }
   top_plate_decor();
 }
@@ -237,7 +245,7 @@ tent_clearance = 0.2;
 tent_lowering = 5.5;
 
 // Outline (uses main PCB outline layer) expanded by case wall_thickness
-module tent_case_outline() { offset(delta=wall_thickness) import(file=DXF, layer=L_plate); }
+module tent_case_outline() { offset(delta=0) import(file=DXF, layer=L_outer_shape); }
 
 module tent_base_plate() {
   linear_extrude(tent_base_thickness)
