@@ -121,7 +121,7 @@ module flat_usb_cutout() { extrude_layer(L_usb, h=total_height_top_case - contro
 // -------------------- Module: lid --------------------
 module lid() {
   extrude_layer(L_outer_shape, z=Z_LID_BASE, h=lid_thickness, delta=0);
-  extrude_layer(L_outer_shape, z=Z_LID_BASE + lid_thickness, h=immersion_depth);
+  extrude_layer(L_plate, z=Z_LID_BASE + lid_thickness, h=immersion_depth);
 }
 
 // -------------------- Module: case_screw_holes --------------------
@@ -314,7 +314,7 @@ module tent() {
 // -----------------------------------------------------------------------------
 // ------------------------------ Build Select ---------------------------------
 // -----------------------------------------------------------------------------
-PART = "top_case";
+PART = "exploded";
 
 // -------------------- Module: build --------------------
 module build() {
