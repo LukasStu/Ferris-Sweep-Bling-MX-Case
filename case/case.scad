@@ -188,10 +188,10 @@ module top_case() {
   difference() {
     outer_case();
     pcb_stack();
+    power_switch_overhang_cutout(delta=clear_switch_mm);
     keycaps_cutout();
     top_plate_decor_cutout();
     top_plate_decor_lines_cutout()
-    power_switch_overhang_cutout(delta=clear_switch_mm);
     case_screw_holes();
     usb_c_cutout_position();
     flat_usb_cutout();
