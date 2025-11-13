@@ -165,7 +165,7 @@ module reset_switch_button() {
 }
 
 module top_plate_decor_cutout() {
-    extrude_layer(L_outer_shape_decor, z=total_height_top_case-0.5 , h=0.5, delta=0.5);  
+    extrude_layer(L_outer_shape_decor, z=total_height_top_case-0.5 , h=0.5, delta=1.0);  
 }
 
 module top_plate_decor() {
