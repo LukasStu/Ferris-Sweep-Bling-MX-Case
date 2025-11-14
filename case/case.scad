@@ -95,8 +95,8 @@ module rounded_case_extrude() {
 
 module pcb_holder() {
     difference() {
-        extrude_layer(L_outer_shape, h=total_height_top_case-5, delta=-wall_thickness_outer);
-        extrude_layer(L_plate, h=total_height_top_case-5, delta=wall_thickness_inner);
+        extrude_layer(L_outer_shape, h=total_height_top_case-8, delta=-wall_thickness_outer);
+        extrude_layer(L_plate, h=total_height_top_case-8, delta=wall_thickness_inner);
     }
 }
 // -------------------- Module: usb_c_cutout_2d --------------------
