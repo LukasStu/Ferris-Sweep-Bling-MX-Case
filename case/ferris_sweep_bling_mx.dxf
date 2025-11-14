@@ -91,7 +91,7 @@ STANDARD
   9
 $CLAYER
   8
-keycaps_outline
+outer_shape_decor
   9
 $CELTYPE
   6
@@ -1115,9 +1115,9 @@ AcDbViewportTableRecord
  21
 1
  12
-131.5957469484938
+217.2470748779337
  22
--7.05631790740531
+-3.646833391236298
  13
 0
  23
@@ -1143,7 +1143,7 @@ AcDbViewportTableRecord
  37
 0
  40
-214.6220329758862
+244.0252514935831
  41
 1.786507258753202
  42
@@ -9303,7 +9303,7 @@ ARC
 100
 AcDbEntity
   8
-keycaps_outline
+outer_shape_decor
   6
 ByLayer
  62
