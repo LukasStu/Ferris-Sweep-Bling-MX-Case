@@ -100,9 +100,9 @@ module pcb_holder() {
     }
 }
 // -------------------- Module: usb_c_cutout_2d --------------------
-module usb_c_cutout_2d(c = 0.1) {
-  w = w_shell + 2 * c;
-  h = h_shell + 2 * c;
+module usb_c_cutout_2d(cw = 0.1, ch = 0.1) {
+  w = w_shell + 2 * cw;
+  h = h_shell + 2 * ch;
   minkowski() { square([w - 2 * r_corner, h - 2 * r_corner], center=true); circle(r=r_corner, $fn=64); }
 }
 
@@ -132,8 +132,8 @@ module lid_screw_holes() { drill_holes(screw_positions, lid_screw_diameter, Z_LI
 
 // -------------------- Module: usb_c_cutout_position --------------------
 module usb_c_cutout_position() {
-  translate(usb_main_offset) rotate([90, 0, 0]) linear_extrude(height=5) usb_c_cutout_2d(0.1);
-  translate(usb_tunnel_offset) rotate([90, 0, 0]) linear_extrude(height=usb_tunnel_len_mm) usb_c_cutout_2d(1.5);
+  translate(usb_main_offset) rotate([90, 0, 0]) linear_extrude(height=5) usb_c_cutout_2d();
+  translate(usb_tunnel_offset) rotate([90, 0, 0]) linear_extrude(height=usb_tunnel_len_mm) usb_c_cutout_2d(1.1, 1.65);
 }
 
 // -------------------- Module: pwr_switch_slider_cutout --------------------
