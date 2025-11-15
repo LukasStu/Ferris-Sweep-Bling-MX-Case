@@ -192,9 +192,9 @@ module top_case() {
     keycaps_cutout();
     case_screw_holes();
     top_plate_decor_cutout();
-    top_plate_decor_lines_cutout()
-    usb_c_cutout_position();
+    top_plate_decor_lines_cutout();
     flat_usb_cutout();
+    usb_c_cutout_position();
     pcb_holder();
   }
   top_plate_decor();
