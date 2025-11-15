@@ -57,7 +57,7 @@ L_switches = "switches";
 L_switchplate = "switchplate_outline";
 
 // Screw positions & sizes
-screw_positions = [[151, -147], [31, -127], [33, -34], [150, -35], [153.5, -90]];
+screw_positions = [[140, -152], [29.5, -132], [30, -32], [152, -32], [153.5, -90]];
 case_screw_diameter = 2.7;
 case_screw_depth = 3.1;
 lid_screw_diameter = 2.5;
@@ -190,9 +190,9 @@ module top_case() {
     pcb_stack();
     power_switch_overhang_cutout(delta=clear_switch_mm);
     keycaps_cutout();
+    case_screw_holes();
     top_plate_decor_cutout();
     top_plate_decor_lines_cutout()
-    case_screw_holes();
     usb_c_cutout_position();
     flat_usb_cutout();
     pcb_holder();
