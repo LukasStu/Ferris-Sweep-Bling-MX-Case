@@ -9,7 +9,7 @@ $fn =  100;
 fillet_radius = 2.5;
 wall_thickness_outer = 5;
 wall_thickness_inner = 2;
-keycaps_cutout_height = 8;
+keycaps_cutout_height = 8.5;
 seal_thickness = 0.1;
 controller_wall_thickness = 1;
 
