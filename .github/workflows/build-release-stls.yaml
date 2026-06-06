@@ -8,33 +8,36 @@ on:
 permissions:
   contents: write
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        part: [exploded, top_case, bottom_case, power_switch_slider, reset_switch_button, switch_plate_foam, bottom_foam, tent]
+        part: [exploded, top_case, bottom_case, power_switch_slider, reset_switch_button, switch_plate_foam, rubber_feet,tent]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install OpenSCAD
         run: |
-          sudo apt-get update
-          sudo apt-get install -y openscad
+          sudo snap install openscad-nightly
 
       - name: Render ${{ matrix.part }}
         run: |
           mkdir -p build
-          openscad --render \
+          OPENSCAD_BIN="$(command -v openscad-nightly || command -v openscad)"
+          "$OPENSCAD_BIN" --render  \
             -o build/${{ matrix.part }}.stl \
             -D 'PART="${{ matrix.part }}"' \
             case/case.scad
 
       # Upload per-part temps to pass artifacts between jobs (short retention)
       - name: Upload STL artifact (temp)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: temp-${{ matrix.part }}     # unique per matrix entry
           path: build/${{ matrix.part }}.stl
@@ -46,14 +49,14 @@ jobs:
     needs: build
     steps:
       - name: Download all temp STL artifacts and merge
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           pattern: temp-*                   # grab all per-part artifacts
           merge-multiple: true              # merge into a single folder
           path: build
 
       - name: Upload consolidated artifact (Actions UI)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: case                        # one-click download in Actions
           path: build/*.stl

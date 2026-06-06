@@ -10,6 +10,9 @@ on:
 permissions:
   contents: read
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 concurrency:
   group: build-stls-${{ github.ref }}
   cancel-in-progress: true  # Cancel previous runs for the same ref
@@ -19,28 +22,28 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        part: [exploded, top_case, bottom_case, power_switch_slider, reset_switch_button, switch_plate_foam, bottom_foam, tent]
+        part: [exploded, top_case, bottom_case, power_switch_slider, reset_switch_button, switch_plate_foam, rubber_feet,tent]
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install OpenSCAD
         run: |
-          sudo apt-get update
-          sudo apt-get install -y openscad
+          sudo snap install openscad-nightly
 
       - name: Render STL for ${{ matrix.part }}
         run: |
           mkdir -p build
-          openscad --render \
+          OPENSCAD_BIN="$(command -v openscad-nightly || command -v openscad)"
+          "$OPENSCAD_BIN" --render  \
             -o build/${{ matrix.part }}.stl \
             -D 'PART="${{ matrix.part }}"' \
             case/case.scad
 
       # Upload each STL temporarily to pass between jobs (unique names to avoid conflicts)
       - name: Upload STL artifact (temp)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: temp-${{ matrix.part }}
           path: build/${{ matrix.part }}.stl
@@ -52,7 +55,7 @@ jobs:
     needs: build
     steps:
       - name: Download all temp STL artifacts and merge
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           pattern: temp-*
           merge-multiple: true
@@ -60,7 +63,7 @@ jobs:
 
       # Upload final single artifact called "case"
       - name: Upload consolidated STL artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: case            # final name for the single downloadable archive
           path: build/*.stl
