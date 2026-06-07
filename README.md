@@ -2,6 +2,8 @@
 A customizable, 3D-print-friendly case designed in OpenSCAD – fully parametric for easy sizing, modification, and rapid prototyping.
 ![](gallery/case_05.jpg)
 
+**V2 update:** Complete design refactor to a more professional architecture with a dedicated upper and lower tray. The PCB is now gasket-mounted via switch-plate tabs for improved isolation, acoustics, and typing feel.
+
 **Features**
 
 * **Fully enclosed, professional design** – clean look with no exposed internals
