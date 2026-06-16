@@ -235,18 +235,19 @@ module power_switch_overhang_cutout(delta = 0) {
 }
 
 module power_switch_slider() {
+  body_h = MSK_thickness + compressed_gasket_thickness + 1;
+  overhang_h = slider_immersion_depth + bottom_gap + kailh_sockets_thickness + fr4_thickness - MSK_thickness -
+               compressed_gasket_thickness - 0.5;
+  body_z = z_bottom_gap + overhang_h;
+
   difference() {
     union() {
       extrude_layer(L_pwr_circ, z = -switch_protrusion, h = bottom_thickness + switch_protrusion);
       extrude_layer(L_pwr_body_overhang, z = z_bottom_gap - slider_immersion_depth, h = slider_immersion_depth);
-      extrude_layer(L_pwr_body_overhang, z = z_bottom_gap,
-                    h = bottom_gap + kailh_sockets_thickness + fr4_thickness - MSK_thickness -
-                        compressed_gasket_thickness);
-      extrude_layer(L_pwr_body, z = z_switchplate_foam - MSK_thickness - compressed_gasket_thickness,
-                    h = MSK_thickness + compressed_gasket_thickness + 1);
+      extrude_layer(L_pwr_body_overhang, z = z_bottom_gap, h = overhang_h);
+      extrude_layer(L_pwr_body, z = body_z, h = body_h);
     }
-    extrude_layer(L_pwr_knob_cutout, z = z_switchplate_foam - MSK_thickness - compressed_gasket_thickness,
-                  h = MSK_thickness + compressed_gasket_thickness + 1);
+    extrude_layer(L_pwr_knob_cutout, z = body_z, h = body_h);
     extrude_layer(L_pwr_on_label, z = -switch_protrusion, h = 0.4);
   }
 }
