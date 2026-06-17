@@ -1,8 +1,15 @@
 # Ferris-Sweep-Bling-MX-Case
 A customizable, 3D-print-friendly case designed in OpenSCAD – fully parametric for easy sizing, modification, and rapid prototyping.
-![](gallery/case_05.jpg)
 
 **V2 update:** Complete design refactor to a more professional architecture with a dedicated upper and lower tray. The PCB is now gasket-mounted via switch-plate tabs for improved isolation, acoustics, and typing feel.
+
+**V2.1.0 case**
+
+| ![](gallery/case-v2-1-0_01.jpg) | ![](gallery/case-v2-1-0_03.jpg) |
+|---------------------------------|---------------------------------|
+| ![](gallery/case-v2-1-0_02.jpg) | ![](gallery/case-v2-1-0_04.jpg) |
+| ![](gallery/case-v2-1-0_05.jpg) | ![](gallery/case-v2-1-0_06.jpg) |
+                               |
 
 **Features**
 
@@ -14,12 +21,6 @@ A customizable, 3D-print-friendly case designed in OpenSCAD – fully parametric
 * **Secure bottom lid** – mounted with heat-set M2 threaded inserts
 * **Refined acoustics** – quiet, pleasant typing sound
 * **Configurable tenting (new in v1.2.0)** – adjustable tent angle for a more ergonomic hand position
-
-
-| ![](gallery/case_01.jpg) | ![](gallery/case_02.jpg) |
-|--------------------------|--------------------------|
-| ![](gallery/case_03.jpg) | ![](gallery/case_04.jpg) |
-| ![](gallery/tent_01.jpg) | ![](gallery/tent_02.jpg) |
 
 ---
 
