@@ -121,6 +121,7 @@ L_switchplate_outline = "switchplate_outline";
 L_gasket_supports = "gasket_supports";
 L_gasket_supports_rim = "gasket_supports_rim";
 L_screw_markers = "screw_markers";
+L_trrs = "trrs";
 
 // -----------------------------------------------------------------------------
 // ------------------------------- Helpers -------------------------------------
@@ -279,6 +280,11 @@ module usb_c_cutout_position() {
   translate(usb_tunnel_offset) rotate([ 90, 0, 0 ]) linear_extrude(height = usb_tunnel_len_mm)
       usb_c_cutout_2d(1.1, 1.65);
 }
+
+// Note: This cutout is only needed if the TRRS jack is mounted on the PCB and protrudes above the case bottom. Adjust z and h as needed. Very basic rectangular cutout...
+module trrs_cutout() {
+  extrude_layer(L_trrs, z = z_bottom_gap, h = bottom_gap + kailh_sockets_thickness + fr4_thickness);
+}
 // -----------------------------------------------------------------------------
 // ------------------------------ Threads and screws -----------------------------
 // -----------------------------------------------------------------------------
@@ -353,6 +359,7 @@ module top_case() {
     controller_cutout();
     usb_c_cutout_position();
     case_rim(rim_clear);
+    //trrs_cutout();
   }
 }
 
@@ -372,6 +379,7 @@ module bottom_case() {
     pwr_switch_slider_cutout(delta = clear_switch_mm);
     power_switch_overhang_cutout(delta = clear_switch_mm);
     usb_c_cutout_position();
+    //trrs_cutout();
   }
 }
 
