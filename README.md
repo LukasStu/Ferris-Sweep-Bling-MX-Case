@@ -29,6 +29,10 @@ This model is also available on [MakerWorld](https://makerworld.com/de/models/17
 
 # Getting Started
 
+## 3D Printing Hint
+
+Use tree supports on the upper and lower case to support the screw holes and the USB opening.
+
 ## Wired Build
 
 For a wired build, enable the TRRS cutouts in both case halves by uncommenting `trrs_cutout();` in `top_case()` and `bottom_case()`. If you are not using a power switch, you can comment out the power-switch cutouts.
