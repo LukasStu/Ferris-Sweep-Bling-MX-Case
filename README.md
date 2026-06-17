@@ -28,6 +28,10 @@ This model is also available on [MakerWorld](https://makerworld.com/de/models/17
 
 # Getting Started
 
+## Wired Build
+
+For a wired build, enable the TRRS cutouts in both case halves by uncommenting `trrs_cutout();` in `top_case()` and `bottom_case()`. If you are not using a power switch, you can comment out the power-switch cutouts.
+
 ## 🧭 Adjusting the USB Outlet
 
 The position of the USB-C port depends on your keyboard’s solder pin configuration and controller setup.  
