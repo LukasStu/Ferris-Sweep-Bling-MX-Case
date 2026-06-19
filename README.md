@@ -25,7 +25,7 @@ A customizable, 3D-print-friendly case designed in OpenSCAD – fully parametric
 ---
 
 📦 **Download & Print**  
-This model is also available on [MakerWorld](https://makerworld.com/de/models/1706706-ferris-sweep-bling-mx-case#profileId-1811389).
+This model is also available on [MakerWorld](https://makerworld.com/de/models/2952710-ferris-sweep-bling-mx-case-v2-1-0#profileId-3308661).
 
 # Getting Started
 
